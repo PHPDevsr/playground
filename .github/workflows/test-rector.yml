@@ -75,4 +75,4 @@ jobs:
       - run: mkdir -p /tmp/rector
 
       - name: Run static analysis
-        run: composer rector
+        run: vendor/bin/rector process --dry-run --no-progress-bar
