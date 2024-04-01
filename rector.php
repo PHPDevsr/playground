@@ -20,7 +20,7 @@ use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->withSets([
+    $rectorConfig->sets([
         CodeigniterSetList::CODEIGNITER_44
     ]);
 
