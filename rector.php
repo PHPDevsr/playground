@@ -21,8 +21,12 @@ use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
-        CodeigniterSetList::CODEIGNITER_44
+        CodeigniterSetList::CODEIGNITER_44,
     ]);
+
+    // auto import fully qualified class names
+    $rectorConfig->importNames();
+    $rectorConfig->removeUnusedImports();
 
     // The paths to refactor (can also be supplied with CLI arguments)
     $rectorConfig->paths([
