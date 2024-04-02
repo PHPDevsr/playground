@@ -22,7 +22,7 @@ use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 return RectorConfig::configure()
     ->withSets([
         CodeigniterSetList::CODEIGNITER_44,
-    ]);
+    ])
 
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
@@ -41,7 +41,7 @@ return RectorConfig::configure()
     // Do you need to include constants, class aliases, or a custom autoloader?
     ->withBootstrapFiles([
         realpath(getcwd()) . '/vendor/codeigniter4/framework/system/Test/bootstrap.php',
-    ]);
+    ])
 
     if (is_file(__DIR__ . '/phpstan.neon.dist')) {
         ->withPHPStanConfigs(__DIR__ . '/phpstan.neon.dist')
