@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use PHPDevsr\Rector\Codeigniter4\Set\CodeigniterSetList;
+use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
@@ -23,30 +24,23 @@ return RectorConfig::configure()
     ->withSets([
         CodeigniterSetList::CODEIGNITER_44,
     ])
-
     // auto import fully qualified class names
     ->withImportNames(removeUnusedImports: true)
-
     // The paths to refactor (can also be supplied with CLI arguments)
     ->withPaths([
         __DIR__ . '/app',
         __DIR__ . '/tests',
     ])
-
+    ->withParallel(120, 8, 10)
+    ->withCache('/tmp/rector', FileCacheStorage::class)
     // Include Composer's autoload - required for global execution, remove if running locally
     ->withAutoloadPaths([
         __DIR__ . '/vendor/autoload.php',
     ])
-
     // Do you need to include constants, class aliases, or a custom autoloader?
     ->withBootstrapFiles([
         realpath(getcwd()) . '/vendor/codeigniter4/framework/system/Test/bootstrap.php',
     ])
-
-    if (is_file(__DIR__ . '/phpstan.neon.dist')) {
-        ->withPHPStanConfigs(__DIR__ . '/phpstan.neon.dist')
-    }
-
     // Are there files or rules you need to skip?
     ->withSkip([
         __DIR__ . '/app/Views',
