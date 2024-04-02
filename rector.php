@@ -19,37 +19,36 @@ use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->sets([
+return RectorConfig::configure()
+    ->withSets([
         CodeigniterSetList::CODEIGNITER_44,
     ]);
 
     // auto import fully qualified class names
-    $rectorConfig->importNames();
-    $rectorConfig->removeUnusedImports();
+    ->withImportNames(removeUnusedImports: true)
 
     // The paths to refactor (can also be supplied with CLI arguments)
-    $rectorConfig->paths([
+    ->withPaths([
         __DIR__ . '/app',
         __DIR__ . '/tests',
-    ]);
+    ])
 
     // Include Composer's autoload - required for global execution, remove if running locally
-    $rectorConfig->autoloadPaths([
+    ->withAutoloadPaths([
         __DIR__ . '/vendor/autoload.php',
-    ]);
+    ])
 
     // Do you need to include constants, class aliases, or a custom autoloader?
-    $rectorConfig->bootstrapFiles([
+    ->withBootstrapFiles([
         realpath(getcwd()) . '/vendor/codeigniter4/framework/system/Test/bootstrap.php',
     ]);
 
     if (is_file(__DIR__ . '/phpstan.neon.dist')) {
-        $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon.dist');
+        ->withPHPStanConfigs(__DIR__ . '/phpstan.neon.dist')
     }
 
     // Are there files or rules you need to skip?
-    $rectorConfig->skip([
+    ->withSkip([
         __DIR__ . '/app/Views',
 
         JsonThrowOnErrorRector::class,
@@ -63,4 +62,3 @@ return static function (RectorConfig $rectorConfig): void {
 
         AnnotationToAttributeRector::class,
     ]);
-};
